@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Resource>
+<!--   common  -->
+<item name="Name">name cehck </item>
+<item name="Actual Name">Actual Name </item>
+<item name="Code">Code</item>
+<item name="CompanyCode">Company Code</item>
+<item name="AccountCode">Account Code</item>
+<item name="CostCenterCode">Cost Center Code</item>
+<item name="SystemCode">Permission</item>
+<item name="Division">Division</item>
+<item name="Division:">Division:</item>
+<item name="DivisionName">devops</item>
+<item name="DivisionCode">Division Code</item>
+<item name="Creator">Creator</item>
+<item name="Required">Required</item>
+<item name="Activa">Activa</item>
+<item name="ActiveDate">Active Date again </item>
+<item name="InactiveDate">Inactive Date</item>
+<item name="AddressLine1">Address Line 1</item>
+<item name="AddressLine20">Address Line 2</item>
+<item name="AddressLine2">Address Line 20</item>
+<item name="Address">Address</item>
+<item name="City">City</item>
+<item name="name">dhankhar</item>
+<item name="Age">Old 24</item>
+</Resource>
