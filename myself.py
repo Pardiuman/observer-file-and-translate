@@ -4,26 +4,42 @@ from xml.dom import minidom
 from googletrans import Translator
 import xml.etree.ElementTree as ET
 import subprocess
+import time
+
+import xml
 
 original_xml_file = "resource-test.xml"
 
-languages = ["de", "fr", "it"]
+languages = ["de"]
 
 translator = Translator()
 
+def cleanup_html_entities(translated_text):
+    translated_text = translated_text.replace("&gt;", ">")
+    translated_text = translated_text.replace("&lt;", "<")
+    translated_text = translated_text.replace("&amp;", "&")
 
+    return translated_text
 
 def translate_dict(original_dict, language_code):
     translated_dict = {}
     # Translate each value in the original dictionary
     for key, value in original_dict.items():
-        translation = translator.translate(value, dest=language_code)
-        translated_dict[key] = translation.text
-
+        retries = 0
+        try:
+            translation = translator.translate(value,language_code)
+            # original_translation = translator.translate(value, dest=language_code)
+            # translation = cleanup_html_entities(original_translation).replace("&gt;", ">").replace("&lt;", "<").replace("&amp;", "&")
+            translated_dict[key] = translation.text
+        except Exception as e:
+            retries+1
+            print(f"Error translating text. Retrying in 5 seconds...\nError: {e}")
+            time.sleep(5)
+            
     return translated_dict
 
 def read_file_content(file_path):
-    with open(file_path, 'r') as file:
+    with open(file_path, 'r',encoding='utf-8') as file:
         return [line.strip() for line in file.readlines()]
     
 
@@ -36,11 +52,25 @@ def print_changed_lines(old_content, new_content):
     for line in diff:
         if line.startswith('+ '):
             striped_line = line[2:].strip()
-            root = ET.fromstring(striped_line)
-            key = root.attrib['name']
-            value = root.text.strip()
-            data_dict[key]=value
-            print(data_dict)
+            if striped_line and not striped_line.startswith('<!--'):
+                try:
+                    root = ET.fromstring(striped_line)
+                    key = root.attrib.get('name', '')
+                    value = root.text.strip() if root.text is not None else ''
+                    data_dict[key] = value
+                except ET.ParseError as e:
+                    print(f"Error parsing line '{striped_line}': {e}")
+                    continue
+
+
+    # for line in diff:
+    #     if line.startswith('+ '):
+    #         striped_line = line[2:].strip()
+    #         root = ET.fromstring(striped_line)
+    #         key = root.attrib['name']
+    #         value = root.text.strip()
+    #         data_dict[key]=value
+    #         print(data_dict)
 
     if added_lines:
         print("New or modified lines:")
@@ -50,41 +80,12 @@ def print_changed_lines(old_content, new_content):
 
 
 
-# def translate_and_update(text_nodes, language_code):
-#     original_texts = [node.data.strip() for node in text_nodes]
-#     translations = translator.translate(original_texts, dest=language_code)
-#     for node, translation in zip(text_nodes, translations):
-#         node.data = translation.text
-#     return original_texts, [t.text for t in translations]
-
-
 def remove_blank_lines(file_path):
     with open(file_path, 'r') as file:
         lines = [line.strip() for line in file.readlines() if line.strip()]
 
     with open(file_path, 'w') as file:
         file.write('\n'.join(lines))
-
-# def write_translated_xml(output_file_path, translated_items):
-#     output_doc = minidom.Document()
-#     resource_element = output_doc.createElement("Resource")
-#     output_doc.appendChild(resource_element)
-    
-#    # Append translated items to the resource element
-#     for name, translation in translated_items:
-#         item_element = output_doc.createElement("item")
-#         item_element.setAttribute("name", name)
-#         item_element.appendChild(output_doc.createTextNode(translation))
-
-#         resource_element.appendChild(item_element)
-
-#     # Write the output XML document to the specified file path
-#     with open(output_file_path, "w", encoding="utf-8") as output_file:
-#         output_file.write(output_doc.toprettyxml(indent="", encoding="utf-8").decode("utf-8"))
-
-#     remove_blank_lines(output_file_path)
-
-#     print(f"'saved to' {output_file_path}")
 
 
 def process_output_doc(output_doc_path, data_dict):
@@ -121,6 +122,26 @@ def process_output_doc(output_doc_path, data_dict):
   except Exception as e:
     print(f"Error processing XML file '{output_doc_path}': {e}")
 
+
+
+def translate_node(node, dest_lang):
+    if node.nodeType == node.TEXT_NODE and node.data.strip():
+        translated_text = None
+        retries = 0
+        while translated_text is None:
+            try:
+                translated_text = translator.translate(node.data,dest_lang)
+                # original_translated = translator.translate(node.data, dest=dest_lang)
+                # translated_text = cleanup_html_entities(original_translated).replace("&gt;", ">").replace("&lt;", "<").replace("&amp;", "&")
+                # translated_text = cleanup_html_entities(original_translated)
+                print(f"{node.data} translated into :- {translated_text}")
+            except Exception as e:
+                retries+1
+                print(f"Error translating text. Retrying in 5 seconds...\nError: {e}")
+                time.sleep(5)
+        node.data = translated_text.text
+    for child in node.childNodes:
+        translate_node(child,  dest_lang)
 
 
 file_path = original_xml_file
@@ -165,19 +186,19 @@ for language in languages:
         tarnslated_dict = translate_dict(data_dict_from_difference,language)
         print(tarnslated_dict)
         process_output_doc(output_file_path,tarnslated_dict)
-
-
-        # translated_items = translate_and_update(all_items,languages)
+        remove_blank_lines(output_file_path)
 
     if not os.path.exists(output_folder):
-            try:
-                subprocess.run(["python", "ishu.py"], check=True)
-            except subprocess.CalledProcessError as e:
-                print(f"Error occurred while running ishu.py: {e}")
-    #     os.makedirs(output_folder)
-
-    #     xml_doc = minidom.parse(original_xml_file)
-    #     all_items = xml_doc.getElementsByTagName("item")
+        os.makedirs(output_folder)
+        xml_doc = minidom.parse(original_xml_file)
+        all_items = xml_doc.getElementsByTagName("item")
+        translate_node(xml_doc,language)
+        # with open(output_file_path, 'w', encoding='utf-8') as file:
+        #     output_file_path.write(xml_doc.toprettyxml(file, encoding='utf-8').decode('utf-8'))
+        with open(output_file_path, 'w', encoding='utf-8') as file:
+            file.write(xml_doc.toprettyxml(indent="", encoding="utf-8").decode("utf-8"))
+        print(f" {output_file_path} is successfully written down")
+        remove_blank_lines(output_file_path)
 
     #     # Translate and update text nodes in the XML document
     #     original_texts, translations = translate_and_update([item.firstChild for item in all_items if item.firstChild], language)
@@ -187,6 +208,53 @@ for language in languages:
     #     write_translated_xml(output_file_path, translated_items)
 
     # remove_blank_lines(output_file_path)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# def translate_and_update(text_nodes, language_code):
+#     original_texts = [node.data.strip() for node in text_nodes]
+#     translations = translator.translate(original_texts, dest=language_code)
+#     for node, translation in zip(text_nodes, translations):
+#         node.data = translation.text
+#     return original_texts, [t.text for t in translations]
+###############################################################################
+
+
+# def write_translated_xml(output_file_path, translated_items):
+#     output_doc = minidom.Document()
+#     resource_element = output_doc.createElement("Resource")
+#     output_doc.appendChild(resource_element)
+    
+#    # Append translated items to the resource element
+#     for name, translation in translated_items:
+#         item_element = output_doc.createElement("item")
+#         item_element.setAttribute("name", name)
+#         item_element.appendChild(output_doc.createTextNode(translation))
+
+#         resource_element.appendChild(item_element)
+
+#     # Write the output XML document to the specified file path
+#     with open(output_file_path, "w", encoding="utf-8") as output_file:
+#         output_file.write(output_doc.toprettyxml(indent="", encoding="utf-8").decode("utf-8"))
+
+#     remove_blank_lines(output_file_path)
+
+#     print(f"'saved to' {output_file_path}")
+
+
+
+
 
 
 

@@ -1,28 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Resource>
 <!--   common  -->
-<item name="Name">name cehck </item>
-<item name="Actual Name">Actual Name </item>
+<item name="Name">name </item>
+<item name="class">MCA </item>
+<item name="Actual Name">Actual Name Paragraphs are the building blocks of papers. Many students define paragraphs in terms of length: a paragraph is a group of at least five sentences, a paragraph is half a page long, etc. In reality, though, the unity and coherence of ideas among sentences is what constitutes a paragraph. A paragraph is defined as “a group of sentences or a single sentence that forms a unit” (Lunsford and Connors 116). Length and appearance do not determine whether a section in a paper is a paragraph. For instance, in some styles of writing, particularly journalistic styles, a paragraph can be just one sentence long. </item>
 <item name="Code">Code</item>
 <item name="CompanyCode">Company Code</item>
-<item name="AccountCode">Account Code</item>
-<item name="CostCenterCode">Cost Center Code</item>
-<item name="SystemCode">Permission</item>
-<item name="Division">Division</item>
-<item name="Division:">Division:</item>
-<item name="DivisionName">devops</item>
+<item name="DivisionName">Division Name</item>
 <item name="DivisionCode">Division Code</item>
 <item name="Creator">Creator</item>
 <item name="Required">Required</item>
-<item name="Activa">Activa</item>
-<item name="ActiveDate">Active Date again </item>
+<item name="Active">Active</item>
+<item name="ActiveDate">Active Date</item>
 <item name="InactiveDate">Inactive Date</item>
 <item name="AddressLine1">Address Line 1</item>
-<item name="AddressLine20">Address Line 2</item>
-<item name="AddressLine2">Address Line 20</item>
-<item name="Address">THis address is also puthi</item>
+<item name="AddressLine2">Address Line 2</item>
 <item name="City">City</item>
-<item name="name">dhankhar</item>
-<item name="Age">Old 24</item>
-<item name="village">Kharar</item>
+<item name="State">State</item>
+<item name="Zip">ZIP Code</item>
+<item name="Province">Province</item>
+<item name="Update">Update</item>
+<item name="UpdateAndClose">Update and Close</item>
+<item name="Help">Help</item>
+<item name="FormView">Form View</item>
+<item name="ListView">List View</item>
+<item name="Delete">Delete</item>
+<item name="Copy">Copy</item>
+<item name="Submit">Submit</item>
+<item name="New">New</item>
+<item name="Existing">Existing</item>
+<item name="Old">Old</item>
+<item name="Save">Save</item>
+<item name="OK">OK</item>
+
+<item name="TMAuthor_BrowseFolder">Browse Folder</item>
+<item name="TMAuthor_UploadProcedure"><![CDATA[Note: You need to select a course file under the source folder here. Please ensure that the file you select resides in a folder that adheres to the following path on your source computer: &lt;Drive Letter&gt;\CourseLibrary\Master\&lt;CourseFolder&gt;. Also ensure that you've already placed the selected course files on the target server under CourseLibrary/Master/&lt;CourseFolder&gt; folder before clicking "List HTML pages".]]></item>
+<item name="TMAuthor_FilePath">Your Selected File path on the server is</item>
+<item name="TMAuthor_UpdateError">Updating database , Error occured</item>
+<item name="TMAuthor_CompletedSuccessfully">Completed Successfully</item>
+<item name="AccountConfirmationBody">
+<![CDATA[<div style="background-color: #F2F2F2; height: 400px; width: 800px; font-family: 'Calibri'; font-size: 12pt;">
+<div style="padding-top: 20px; padding-bottom: 20px; text-align: center;">
+<br />
+<img src="http://www.fldata.com/images/logo-color-nav.png" />
+<br />
+<hr style="border: 0; width: 100%; color: #E36C0A; background-color: #E36C0A; height: 5px;">
+</div>
+<div style="padding: 10px">
+<span style="font-weight: bold; font-size: 14pt;">&emsp;Welcome to Frontline {#1}!</span>
+<br />
+</div>
+<div style="text-align: center;">
+<span style="padding: 25px">
+<span style="display: block;">
+Our records show that you have been added as a user for {#2}. As part of our ongoing efforts to provide safe and secure service, please confirm your account.
+</span>
+<br />
+<br />
+<a style="height: 40px; background-color: #002060; color: #FFFFFF; font-weight: bold; padding: 10px; font-size: 18pt; border-radius: 10px; text-decoration: none;" href="{#3}">&emsp;&nbsp;Confirm your account&emsp;&nbsp;</a>
+</span>
+</div>
+<div>
+<span>&emsp;Thanks,</span>
+<br />
+<span>&emsp;&emsp;Frontline Data Solutions</span>
+</div>
+<div style="padding-top: 20px; padding-bottom: 20px; text-align: center; font-size: 10pt; color: #a6a6a6;">
+<span>If you have any questions or issues please contact your local administrator or IT service team.</span>
+<br />
+&emsp;&nbsp;
+</div>
+</div>]]>
+</item>
+
+<item name="TMAuthor_SelectReason">Please select version.</item>
+<item name="TMAuthor_EnterComment">Please enter comments.</item>
+<item name="TMAuthor_EnterReason">Please enter the reason.</item>
+
+<!-- 12/13/2019, TMSettings -->
+<item name="TMSettings_CompanyJob">Company Job</item>
+<item name="TMSettings_Title1"> Settings->Company->Jobs</item>
+<item name="TMSettings_Title2"> Settings->Division->Jobs</item>
+<item name="TMSettings_Title3">Company Skillsets</item>
+<item name="TMSettings_Title4">Period Due from</item>
+<item name="TMSettings_Title5"> Settings->Company->Skillsets</item>
+<item name="TMSettings_Title6"> Settings->Division->Skillsets</item>
+<item name="TMSettings_Title7"> Settings->Company->TrainingItems</item>
+<item name="TMSettings_Title8"> Settings->Division->TrainingItems</item>
+
+<item name="TMSettings_Title9">Public</item>
+<item name="TMSettings_Title10">Company</item>
+<item name="TMSettings_Title11">Division</item>
+
+<item name="EnterPrefix">Please enter the prefix.</item>
+
+<item name="ChangeMOCPriority">Are you sure you want to change the priority of this MOC?</item>
+
+<item name="Elements->Templates->UserDefinedFields">Elements->Templates->User Defined Fields</item>
+
+<item name="ReportAlert">Report returns more than 10,000 records, and it will slow down Frontline server for learners. It is recommended that you cancel out and change or increase number of filters in this report. Are you sure you want to continue running this report?</item>
+
+<item name="ForgetPassword">Please enter your user ID and then click Forgot password.</item>
+
+<item name="LoginPageTitle">Supervisor/Administrator login</item>
+<item name="NoAccess">No Access</item>
+<item name="IncorrectlessonCellOrder">Incorrect lesson cell order.</item>
+
+<item name="AssMOC">Associated MOC</item>
+<item name="CollaborationText">Collaboration</item>
+<item name="SelfDeactivateMessage">You cannot deactivate your account.</item>
+
+<item name="WOTitle">WO Title</item>
+<item name="WOLocation">WO Location</item>
+
+
+<item name="ContractNumber">APTTUS Contract Number</item>
+<item name="ContractRep">Contract Rep</item>
+<item name="ContractInfo">Contract Info</item>
+<item name="JobRole">Job Role</item>
+
+<item name="AssetNumber">Asset Number</item>
+<item name="Location">Location</item>
+<item name="AssetOwner">Owning Department</item>
+<item name="Criticality">Criticality</item>
+<item name="AssetGroup">Asset Group</item>
+<item name="Add URL">Add URL</item>
+<item name="View People Details">View People Details</item>
+
+<item name="InboxDate">Inbox Date</item>
+<item name="JobAssignees">Job Assignees</item>
+<item name="Assignmnt_Type">Assignment Type</item>
+<item name="TaskName">Task Name</item>
+<item name="Awaiting_By">Awaiting By</item>
+
+<item name="CollaborationDate">Collaboration Date</item>
+<item name="ImplementationManagerType">Implementation Manager Type</item>
+<item name="LocationPath">Location Path</item>
+<item name="OriginatorType">Originator Type</item>
+<item name="ResubmitDate">Resubmit Date</item>
 </Resource>

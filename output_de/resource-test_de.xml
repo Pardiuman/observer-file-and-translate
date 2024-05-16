@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Resource>
+<!--   common  -->
+<item name="Name">Name</item>
+<item name="Actual Name">Eigentliche Namensabsätze sind die Bausteine ​​von Aufsätzen. Viele Schüler definieren Absätze anhand der Länge: Ein Absatz ist eine Gruppe von mindestens fünf Sätzen, ein Absatz ist eine halbe Seite lang usw. In Wirklichkeit ist es jedoch die Einheit und Kohärenz der Ideen zwischen Sätzen, die einen Absatz ausmachen. Ein Absatz ist definiert als „eine Gruppe von Sätzen oder ein einzelner Satz, der eine Einheit bildet“ (Lunsford und Connors 116). Länge und Aussehen bestimmen nicht, ob ein Abschnitt in einer Arbeit ein Absatz ist. Beispielsweise kann in manchen Schreibstilen, insbesondere im journalistischen Stil, ein Absatz nur einen Satz lang sein.</item>
+<item name="Code">Code</item>
+<item name="CompanyCode">Firmencode</item>
+<item name="DivisionName">Abteilungsname</item>
+<item name="DivisionCode">Abteilungscode</item>
+<item name="Creator">Schöpfer</item>
+<item name="Required">Erforderlich</item>
+<item name="Active">Aktiv</item>
+<item name="ActiveDate">Aktives Datum</item>
+<item name="InactiveDate">Inaktives Datum</item>
+<item name="AddressLine1">Anschrift Zeile 1</item>
+<item name="AddressLine2">Adresszeile 2</item>
+<item name="City">Stadt</item>
+<item name="State">Zustand</item>
+<item name="Zip">PLZ</item>
+<item name="Province">Provinz</item>
+<item name="Update">Aktualisieren</item>
+<item name="UpdateAndClose">Aktualisieren und schließen</item>
+<item name="Help">Helfen</item>
+<item name="FormView">Formularansicht</item>
+<item name="ListView">Listenansicht</item>
+<item name="Delete">Löschen</item>
+<item name="Copy">Kopieren</item>
+<item name="Submit">Einreichen</item>
+<item name="New">Neu</item>
+<item name="Existing">Bestehende</item>
+<item name="Old">Alt</item>
+<item name="Save">Speichern</item>
+<item name="OK">OK</item>
+<item name="TMAuthor_BrowseFolder">Ordner durchsuchen</item>
+<item name="TMAuthor_UploadProcedure"><![CDATA[Note: You need to select a course file under the source folder here. Please ensure that the file you select resides in a folder that adheres to the following path on your source computer: &lt;Drive Letter&gt;\CourseLibrary\Master\&lt;CourseFolder&gt;. Also ensure that you've already placed the selected course files on the target server under CourseLibrary/Master/&lt;CourseFolder&gt; folder before clicking "List HTML pages".]]></item>
+<item name="TMAuthor_FilePath">Ihr ausgewählter Dateipfad auf dem Server lautet</item>
+<item name="TMAuthor_UpdateError">Beim Aktualisieren der Datenbank ist ein Fehler aufgetreten</item>
+<item name="TMAuthor_CompletedSuccessfully">Erfolgreich beendet</item>
+<item name="AccountConfirmationBody">
+<![CDATA[<div style="background-color: #F2F2F2; height: 400px; width: 800px; font-family: 'Calibri'; font-size: 12pt;">
+<div style="padding-top: 20px; padding-bottom: 20px; text-align: center;">
+<br />
+<img src="http://www.fldata.com/images/logo-color-nav.png" />
+<br />
+<hr style="border: 0; width: 100%; color: #E36C0A; background-color: #E36C0A; height: 5px;">
+</div>
+<div style="padding: 10px">
+<span style="font-weight: bold; font-size: 14pt;">&emsp;Welcome to Frontline {#1}!</span>
+<br />
+</div>
+<div style="text-align: center;">
+<span style="padding: 25px">
+<span style="display: block;">
+Our records show that you have been added as a user for {#2}. As part of our ongoing efforts to provide safe and secure service, please confirm your account.
+</span>
+<br />
+<br />
+<a style="height: 40px; background-color: #002060; color: #FFFFFF; font-weight: bold; padding: 10px; font-size: 18pt; border-radius: 10px; text-decoration: none;" href="{#3}">&emsp;&nbsp;Confirm your account&emsp;&nbsp;</a>
+</span>
+</div>
+<div>
+<span>&emsp;Thanks,</span>
+<br />
+<span>&emsp;&emsp;Frontline Data Solutions</span>
+</div>
+<div style="padding-top: 20px; padding-bottom: 20px; text-align: center; font-size: 10pt; color: #a6a6a6;">
+<span>If you have any questions or issues please contact your local administrator or IT service team.</span>
+<br />
+&emsp;&nbsp;
+</div>
+</div>]]>
+</item>
+<item name="TMAuthor_SelectReason">Bitte Version auswählen.</item>
+<item name="TMAuthor_EnterComment">Bitte geben Sie Kommentare ein.</item>
+<item name="TMAuthor_EnterReason">Bitte geben Sie den Grund ein.</item>
+<!-- 12/13/2019, TMSettings -->
+<item name="TMSettings_CompanyJob">Firmenjob</item>
+<item name="TMSettings_Title1">Einstellungen-&gt;Firma-&gt;Jobs</item>
+<item name="TMSettings_Title2">Einstellungen-&gt;Abteilung-&gt;Jobs</item>
+<item name="TMSettings_Title3">Unternehmenskompetenzen</item>
+<item name="TMSettings_Title4">Fälligkeitszeitraum ab</item>
+<item name="TMSettings_Title5">Einstellungen-&gt;Unternehmen-&gt;Skillsets</item>
+<item name="TMSettings_Title6">Einstellungen-&gt;Abteilung-&gt;Skillsets</item>
+<item name="TMSettings_Title7">Einstellungen-&gt;Firma-&gt;TrainingItems</item>
+<item name="TMSettings_Title8">Einstellungen-&gt;Abteilung-&gt;TrainingItems</item>
+<item name="TMSettings_Title9">Öffentlich</item>
+<item name="TMSettings_Title10">Unternehmen</item>
+<item name="TMSettings_Title11">Aufteilung</item>
+<item name="EnterPrefix">Bitte geben Sie das Präfix ein.</item>
+<item name="ChangeMOCPriority">Sind Sie sicher, dass Sie die Priorität dieses MOC ändern möchten?</item>
+<item name="Elements-&gt;Templates-&gt;UserDefinedFields">Elemente-&gt;Vorlagen-&gt;Benutzerdefinierte Felder</item>
+<item name="ReportAlert">Der Bericht gibt mehr als 10.000 Datensätze zurück und verlangsamt den Frontline-Server für Lernende. Es wird empfohlen, die Anzahl der Filter in diesem Bericht zu stornieren und zu ändern oder zu erhöhen. Sind Sie sicher, dass Sie diesen Bericht weiterhin ausführen möchten?</item>
+<item name="ForgetPassword">Bitte geben Sie Ihre Benutzer-ID ein und klicken Sie dann auf Passwort vergessen.</item>
+<item name="LoginPageTitle">Anmeldung als Supervisor/Administrator</item>
+<item name="NoAccess">Kein Zugang</item>
+<item name="IncorrectlessonCellOrder">Falsche Reihenfolge der Unterrichtszellen.</item>
+<item name="AssMOC">Zugehöriges MOC</item>
+<item name="CollaborationText">Zusammenarbeit</item>
+<item name="SelfDeactivateMessage">Sie können Ihr Konto nicht deaktivieren.</item>
+<item name="WOTitle">WO-Titel</item>
+<item name="WOLocation">WO-Standort</item>
+<item name="ContractNumber">APTTUS-Vertragsnummer</item>
+<item name="ContractRep">Vertragsvertreter</item>
+<item name="ContractInfo">Vertragsinformationen</item>
+<item name="JobRole">Stellenbeschreibung</item>
+<item name="AssetNumber">Inventarnummer</item>
+<item name="Location">Standort</item>
+<item name="AssetOwner">Besitzende Abteilung</item>
+<item name="Criticality">Kritisch</item>
+<item name="AssetGroup">Asset-Gruppe</item>
+<item name="Add URL">URL hinzufügen</item>
+<item name="View People Details">Personendetails anzeigen</item>
+<item name="InboxDate">Datum des Posteingangs</item>
+<item name="JobAssignees">Arbeitsbeauftragte</item>
+<item name="Assignmnt_Type">Zuweisungstyp</item>
+<item name="TaskName">Aufgabennname</item>
+<item name="Awaiting_By">Warten auf</item>
+<item name="CollaborationDate">Datum der Zusammenarbeit</item>
+<item name="ImplementationManagerType">Typ des Implementierungsmanagers</item>
+<item name="LocationPath">Standortpfad</item>
+<item name="OriginatorType">Urhebertyp</item>
+<item name="ResubmitDate">Datum der erneuten Übermittlung</item>
+<item name="class">MCA</item>
+</Resource>
