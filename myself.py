@@ -3,10 +3,11 @@ import difflib
 from xml.dom import minidom
 from googletrans import Translator
 import xml.etree.ElementTree as ET
+import subprocess
 
 original_xml_file = "resource-test.xml"
 
-languages = "de" 
+languages = ["de", "fr", "it"]
 
 translator = Translator()
 
@@ -49,12 +50,12 @@ def print_changed_lines(old_content, new_content):
 
 
 
-def translate_and_update(text_nodes, language_code):
-    original_texts = [node.data.strip() for node in text_nodes]
-    translations = translator.translate(original_texts, dest=language_code)
-    for node, translation in zip(text_nodes, translations):
-        node.data = translation.text
-    return original_texts, [t.text for t in translations]
+# def translate_and_update(text_nodes, language_code):
+#     original_texts = [node.data.strip() for node in text_nodes]
+#     translations = translator.translate(original_texts, dest=language_code)
+#     for node, translation in zip(text_nodes, translations):
+#         node.data = translation.text
+#     return original_texts, [t.text for t in translations]
 
 
 def remove_blank_lines(file_path):
@@ -64,27 +65,133 @@ def remove_blank_lines(file_path):
     with open(file_path, 'w') as file:
         file.write('\n'.join(lines))
 
-def write_translated_xml(output_file_path, translated_items):
-    output_doc = minidom.Document()
-    resource_element = output_doc.createElement("Resource")
-    output_doc.appendChild(resource_element)
+# def write_translated_xml(output_file_path, translated_items):
+#     output_doc = minidom.Document()
+#     resource_element = output_doc.createElement("Resource")
+#     output_doc.appendChild(resource_element)
     
-   # Append translated items to the resource element
-    for name, translation in translated_items:
-        item_element = output_doc.createElement("item")
-        item_element.setAttribute("name", name)
-        item_element.appendChild(output_doc.createTextNode(translation))
+#    # Append translated items to the resource element
+#     for name, translation in translated_items:
+#         item_element = output_doc.createElement("item")
+#         item_element.setAttribute("name", name)
+#         item_element.appendChild(output_doc.createTextNode(translation))
 
-        resource_element.appendChild(item_element)
+#         resource_element.appendChild(item_element)
 
-    # Write the output XML document to the specified file path
-    with open(output_file_path, "w", encoding="utf-8") as output_file:
-        output_file.write(output_doc.toprettyxml(indent="", encoding="utf-8").decode("utf-8"))
+#     # Write the output XML document to the specified file path
+#     with open(output_file_path, "w", encoding="utf-8") as output_file:
+#         output_file.write(output_doc.toprettyxml(indent="", encoding="utf-8").decode("utf-8"))
 
-    remove_blank_lines(output_file_path)
+#     remove_blank_lines(output_file_path)
 
-    print(f"'saved to' {output_file_path}")
+#     print(f"'saved to' {output_file_path}")
 
+
+def process_output_doc(output_doc_path, data_dict):
+  try:
+    # Parse the XML document
+    doc = minidom.parse(output_doc_path)
+    root = doc.documentElement
+
+    # Iterate over each key-value pair in data_dict
+    for key, value in data_dict.items():
+      found = False
+      for item_element in root.getElementsByTagName("item"):
+        if item_element.getAttribute("name") == key:
+          # Update the text content for any matching element
+          item_element.firstChild.data = value
+          found = True
+          break  # Exit loop after update for a key
+
+      if not found:
+        # Create a new element if no match is found
+        new_element = doc.createElement("item")
+        new_element.setAttribute("name", key)
+        new_text_node = doc.createTextNode(value)
+        new_element.appendChild(new_text_node)
+        root.appendChild(new_element)
+
+    # Serialize the updated XML document and overwrite the original file
+    with open(output_doc_path, "w", encoding="utf-8") as output_file:
+      output_file.write(doc.toprettyxml(indent="", encoding="utf-8").decode("utf-8"))
+
+    print(f"Updated XML file '{output_doc_path}' with translated values.")
+  except FileNotFoundError:
+    print(f"Error: File '{output_doc_path}' not found.")
+  except Exception as e:
+    print(f"Error processing XML file '{output_doc_path}': {e}")
+
+
+
+file_path = original_xml_file
+# Path to the file where we store the previous content
+content_file_path = 'file_content.txt'
+# Read the current content of the file and normalize it
+current_content = read_file_content(file_path)
+data_dict_from_difference = {}
+
+if os.path.exists(content_file_path):
+    with open(content_file_path, 'r') as content_file:
+        stored_content = [line.strip() for line in content_file.readlines()]
+    
+    # Compare the current content with the stored content
+    if current_content != stored_content:
+        print("File has been modified.")
+        data_dict_from_difference = print_changed_lines(stored_content, current_content)
+
+        
+        # Update the stored content with the current content
+        with open(content_file_path, 'w') as content_file:
+            content_file.writelines([line + '\n' for line in current_content])
+    else:
+        print("No changes detected.")
+else:
+    # If content file does not exist, create it and store the current content
+    with open(content_file_path, 'w') as content_file:
+        content_file.writelines([line + '\n' for line in current_content])
+    print("Monitoring started. Initial file content:")
+    for line in current_content:
+        print(line)
+
+
+
+for language in languages:
+    output_folder = f"output_{language}"
+    output_file_path = f"{output_folder}/{os.path.splitext(original_xml_file)[0]}_{language}.xml"
+
+    if os.path.exists(output_folder) and data_dict_from_difference:
+        xml_doc = minidom.parse(original_xml_file)
+        all_items=xml_doc.getElementsByTagName("item")
+        tarnslated_dict = translate_dict(data_dict_from_difference,language)
+        print(tarnslated_dict)
+        process_output_doc(output_file_path,tarnslated_dict)
+
+
+        # translated_items = translate_and_update(all_items,languages)
+
+    if not os.path.exists(output_folder):
+            try:
+                subprocess.run(["python", "ishu.py"], check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"Error occurred while running ishu.py: {e}")
+    #     os.makedirs(output_folder)
+
+    #     xml_doc = minidom.parse(original_xml_file)
+    #     all_items = xml_doc.getElementsByTagName("item")
+
+    #     # Translate and update text nodes in the XML document
+    #     original_texts, translations = translate_and_update([item.firstChild for item in all_items if item.firstChild], language)
+    #     # Create a list of translated items (name, translated_text)
+    #     translated_items = [(item.getAttribute("name"), translation) for item, translation in zip(all_items, translations)]
+    #     # Write translated items to the output XML file
+    #     write_translated_xml(output_file_path, translated_items)
+
+    # remove_blank_lines(output_file_path)
+
+
+
+
+###################################################### COMMENTED CODE HERE #######################################
 ######################################  WORKING FINE ##############################################
 # def process_output_doc(output_doc_path, data_dict):
 #     try:
@@ -165,104 +272,3 @@ def write_translated_xml(output_file_path, translated_items):
 #   except Exception as e:
 #     print(f"Error processing XML file '{output_doc_path}': {e}")
 #################################################################################
-
-def process_output_doc(output_doc_path, data_dict):
-  try:
-    # Parse the XML document
-    doc = minidom.parse(output_doc_path)
-    root = doc.documentElement
-
-    # Iterate over each key-value pair in data_dict
-    for key, value in data_dict.items():
-      found = False
-      for item_element in root.getElementsByTagName("item"):
-        if item_element.getAttribute("name") == key:
-          # Update the text content for any matching element
-          item_element.firstChild.data = value
-          found = True
-          break  # Exit loop after update for a key
-
-      if not found:
-        # Create a new element if no match is found
-        new_element = doc.createElement("item")
-        new_element.setAttribute("name", key)
-        new_text_node = doc.createTextNode(value)
-        new_element.appendChild(new_text_node)
-        root.appendChild(new_element)
-
-    # Serialize the updated XML document and overwrite the original file
-    with open(output_doc_path, "w", encoding="utf-8") as output_file:
-      output_file.write(doc.toprettyxml(indent="", encoding="utf-8").decode("utf-8"))
-
-    print(f"Updated XML file '{output_doc_path}' with translated values.")
-  except FileNotFoundError:
-    print(f"Error: File '{output_doc_path}' not found.")
-  except Exception as e:
-    print(f"Error processing XML file '{output_doc_path}': {e}")
-
-
-
-
-output_folder = f"output_{languages}"
-output_file_path = f"{output_folder}/{os.path.splitext(original_xml_file)[0]}_{languages}.xml"
-
-
-file_path = original_xml_file
-# Path to the file where we store the previous content
-content_file_path = 'file_content.txt'
-# Read the current content of the file and normalize it
-current_content = read_file_content(file_path)
-data_dict_from_difference = {}
-
-if os.path.exists(content_file_path):
-    with open(content_file_path, 'r') as content_file:
-        stored_content = [line.strip() for line in content_file.readlines()]
-    
-    # Compare the current content with the stored content
-    if current_content != stored_content:
-        print("File has been modified.")
-        data_dict_from_difference = print_changed_lines(stored_content, current_content)
-
-        
-        # Update the stored content with the current content
-        with open(content_file_path, 'w') as content_file:
-            content_file.writelines([line + '\n' for line in current_content])
-    else:
-        print("No changes detected.")
-else:
-    # If content file does not exist, create it and store the current content
-    with open(content_file_path, 'w') as content_file:
-        content_file.writelines([line + '\n' for line in current_content])
-    print("Monitoring started. Initial file content:")
-    for line in current_content:
-        print(line)
-
-
-
-if os.path.exists(output_folder) and data_dict_from_difference:
-    xml_doc = minidom.parse(original_xml_file)
-    all_items=xml_doc.getElementsByTagName("item")
-    tarnslated_dict = translate_dict(data_dict_from_difference,languages)
-    print(tarnslated_dict)
-    process_output_doc(output_file_path,tarnslated_dict)
-    
-    
-    # translated_items = translate_and_update(all_items,languages)
-    
-if not os.path.exists(output_folder):
-    os.makedirs(output_folder)
-
-# Parse the original XML file
-    xml_doc = minidom.parse(original_xml_file)
-    all_items = xml_doc.getElementsByTagName("item")
-
-    # Translate and update text nodes in the XML document
-    original_texts, translations = translate_and_update([item.firstChild for item in all_items if item.firstChild], languages)
-
-    # Create a list of translated items (name, translated_text)
-    translated_items = [(item.getAttribute("name"), translation) for item, translation in zip(all_items, translations)]
-
-    # Write translated items to the output XML file
-    write_translated_xml(output_file_path, translated_items)
-
-remove_blank_lines(output_file_path)

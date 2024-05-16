@@ -20,8 +20,9 @@
 	<item name="AddressLine1">Address Line 1</item>
 	<item name="AddressLine20">Address Line 2</item>
 	<item name="AddressLine2">Address Line 20</item>
-	<item name="Address">Address</item>
+	<item name="Address">THis address is also puthi</item>
 	<item name="City">City</item>
 	<item name="name">dhankhar</item>
 	<item name="Age">Old 24</item>
+	<item name="village">Kharar</item>
 </Resource>
