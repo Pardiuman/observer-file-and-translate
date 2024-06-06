@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Resource>
 	<!--   common  -->
-	<item name="Name">Name</item>
+	<item name="Name">Name which is being tested for secod run </item>
 	<item name="Code">Code</item>
+	<item name="Code1">Code1</item>
 	<item name="CompanyCode">Company Code</item>
 	<item name="AccountCode">Account Code</item>
 	<item name="CostCenterCode">Cost Center Code</item>

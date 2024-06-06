@@ -6,11 +6,9 @@ import xml.etree.ElementTree as ET
 import subprocess
 import time
 
-import xml
+original_xml_file = "Resource.xml"
 
-original_xml_file = "resource-test.xml"
-
-languages = ["de"]
+languages = ["de", "es", "fr", "it", "ko", "pt", "tr", "zh-CN"]
 
 translator = Translator()
 
@@ -81,10 +79,10 @@ def print_changed_lines(old_content, new_content):
 
 
 def remove_blank_lines(file_path):
-    with open(file_path, 'r') as file:
+    with open(file_path, 'r',encoding='utf-8') as file:
         lines = [line.strip() for line in file.readlines() if line.strip()]
 
-    with open(file_path, 'w') as file:
+    with open(file_path, 'w', encoding='utf-8') as file:
         file.write('\n'.join(lines))
 
 
@@ -152,7 +150,7 @@ current_content = read_file_content(file_path)
 data_dict_from_difference = {}
 
 if os.path.exists(content_file_path):
-    with open(content_file_path, 'r') as content_file:
+    with open(content_file_path, 'r',encoding='utf-8') as content_file:
         stored_content = [line.strip() for line in content_file.readlines()]
     
     # Compare the current content with the stored content
@@ -162,13 +160,13 @@ if os.path.exists(content_file_path):
 
         
         # Update the stored content with the current content
-        with open(content_file_path, 'w') as content_file:
+        with open(content_file_path, 'w', encoding='utf-8') as content_file:
             content_file.writelines([line + '\n' for line in current_content])
     else:
         print("No changes detected.")
 else:
     # If content file does not exist, create it and store the current content
-    with open(content_file_path, 'w') as content_file:
+    with open(content_file_path, 'w', encoding='utf-8') as content_file:
         content_file.writelines([line + '\n' for line in current_content])
     print("Monitoring started. Initial file content:")
     for line in current_content:
@@ -181,25 +179,31 @@ for language in languages:
     output_file_path = f"{output_folder}/{os.path.splitext(original_xml_file)[0]}_{language}.xml"
 
     if os.path.exists(output_folder) and data_dict_from_difference:
-        xml_doc = minidom.parse(original_xml_file)
-        all_items=xml_doc.getElementsByTagName("item")
-        tarnslated_dict = translate_dict(data_dict_from_difference,language)
-        print(tarnslated_dict)
-        process_output_doc(output_file_path,tarnslated_dict)
-        remove_blank_lines(output_file_path)
+        
+        try:
+            xml_doc = minidom.parse(original_xml_file)
+            all_items=xml_doc.getElementsByTagName("item")
+            tarnslated_dict = translate_dict(data_dict_from_difference,language)
+            print(tarnslated_dict)
+            process_output_doc(output_file_path,tarnslated_dict)
+            remove_blank_lines(output_file_path)
+        except Exception as e:
+            print(f"Error parsing or processing XML file '{original_xml_file}': {e}")
 
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
-        xml_doc = minidom.parse(original_xml_file)
-        all_items = xml_doc.getElementsByTagName("item")
-        translate_node(xml_doc,language)
-        # with open(output_file_path, 'w', encoding='utf-8') as file:
-        #     output_file_path.write(xml_doc.toprettyxml(file, encoding='utf-8').decode('utf-8'))
-        with open(output_file_path, 'w', encoding='utf-8') as file:
-            file.write(xml_doc.toprettyxml(indent="", encoding="utf-8").decode("utf-8"))
-        print(f" {output_file_path} is successfully written down")
-        remove_blank_lines(output_file_path)
-
+        try:
+            xml_doc = minidom.parse(original_xml_file)
+            all_items = xml_doc.getElementsByTagName("item")
+            translate_node(xml_doc,language)
+            # with open(output_file_path, 'w', encoding='utf-8') as file:
+            #     output_file_path.write(xml_doc.toprettyxml(file, encoding='utf-8').decode('utf-8'))
+            with open(output_file_path, 'w', encoding='utf-8') as file:
+                file.write(xml_doc.toprettyxml(indent="", encoding="utf-8").decode("utf-8"))
+            print(f" {output_file_path} is successfully written down")
+            remove_blank_lines(output_file_path)
+        except Exception as e:
+            print(f"Error parsing or processing XML file '{original_xml_file}': {e}")
     #     # Translate and update text nodes in the XML document
     #     original_texts, translations = translate_and_update([item.firstChild for item in all_items if item.firstChild], language)
     #     # Create a list of translated items (name, translated_text)
